@@ -100,3 +100,44 @@ export async function saveMeetingCount(user: User, meetingCount: number) {
             })
     }
 }
+
+export function byNumberOfMeetings(a, b) {
+    if (!a.extensions || !b.extensions) return 0;
+    if (a.extensions[0].meetingCount > b.extensions[0].meetingCount)
+        return -1;
+    if (a.extensions[0].meetingCount < b.extensions[0].meetingCount)
+        return 1;
+    return 0;
+}
+
+export async function sendReport(users) {
+    const client = await GraphClient();
+
+    let emailString = ''
+
+    for (let user of users) {
+        if (user.extensions)
+            emailString += "<tr><td>" + user.displayName + "</td><td>" + user.extensions[0].meetingCount + " events next week</td></tr>"
+    }
+
+    let message: Message = {
+        subject: "Report on employee calendars",
+        toRecipients: [{
+            emailAddress: {
+                address: ToEmail
+            }
+        }],
+        body: {
+            content: `<table>${emailString}</table>`,
+            contentType: "html"
+        }
+    }
+    return await client
+        .api("/users/" + FromEmail + "/sendMail")
+        .post({ message })
+        .then((res) => {
+            console.log("Mail sent!")
+        }).catch((error) => {
+            debugger;
+        });
+}
