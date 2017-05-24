@@ -12,6 +12,8 @@ This repository contains a sample project demonstrating the use of Azure Functio
 
 * `git clone https://github.com/markdstafford/oof-assistant.git`
 
+`functions.azure.com/try`
+
 ## Install dependencies
 
 * `npm install` to install project dependencies after moving into the project directory
@@ -31,7 +33,7 @@ This repository contains a sample project demonstrating the use of Azure Functio
 
 ## Grant consent
 
-* Visit `https://login.microsoftonline.com/common/adminconsent?client_id=YOUR_APP_ID&state=12345&redirect_uri=http://localhost:3000` and grant the app access. Replace `YOUR_APP_ID`. After granting access you will be redirected to `localhost:3000` and nothing is running there, which is expected.
+* Visit `https://login.microsoftonline.com/common/adminconsent?client_id=0357a0e6-9c5e-4c8e-9cb2-bd00f5f1c238&state=12345&redirect_uri=http://localhost:3000` and grant the app access. Replace `YOUR_APP_ID`. After granting access you will be redirected to `localhost:3000` and nothing is running there, which is expected.
 
 ## Test locally
 
