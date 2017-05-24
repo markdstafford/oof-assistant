@@ -1,6 +1,6 @@
 import { GraphClient } from '../auth-helpers';
 import { User } from '@microsoft/microsoft-graph-types'
-import { getMeetingCount, getUsersWithExtensions, removeAllExtensionsOnUser } from "../graph-helpers";
+import { getMeetingCount, getUsersWithExtensions, removeAllExtensionsOnUser, saveMeetingCount } from "../graph-helpers";
 
 // Graph Explorer check: https://graph.microsoft.com/beta/users?$select=displayName&$expand=extensions
 
@@ -22,6 +22,9 @@ export async function main(context?, req?) {
             context.log(`Getting meeting count for ${user.userPrincipalName}`);
             // How many meetings are on their calendar next week?
             let meetingCount = await getMeetingCount(user);
+
+            // Save to meeting count as a user extension
+            await saveMeetingCount(user, meetingCount);
         }
     }
 

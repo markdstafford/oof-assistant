@@ -64,3 +64,39 @@ export async function getMeetingCount(user: User) {
             return 0;
         })
 }
+
+export async function saveMeetingCount(user: User, meetingCount: number) {
+    const client = await GraphClient();
+
+    let extensionData = {
+        extensionName: "meetingCount",
+        meetingCount: meetingCount
+    };
+
+    let id = "";
+    if (user.extensions) {
+        for (let extension of user.extensions) {
+            if (extension.extensionName == "meetingCount") {
+                id = extension.id;
+            }
+        }
+    }
+
+    if (id == "") {
+        return client
+            .api(`/users/${user.id}/extensions`)
+            .version(`beta`)
+            .post(extensionData)
+            .catch((e) => {
+                debugger;
+            });
+    } else {
+        return client
+            .api(`/users/${user.id}/extensions/${id}`)
+            .version(`beta`)
+            .patch(extensionData)
+            .catch((e) => {
+                debugger;
+            })
+    }
+}
